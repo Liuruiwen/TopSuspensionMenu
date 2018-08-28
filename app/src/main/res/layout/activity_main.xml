@@ -111,23 +111,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 />
-            <ImageView
-                android:layout_alignParentBottom="true"
-                android:id="@+id/act_main_iv_card"
-                android:layout_margin="15dp"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:src="@drawable/card_img"
-                />
+            <!--<ImageView-->
+                <!--android:layout_alignParentBottom="true"-->
+                <!--android:id="@+id/act_main_iv_card"-->
+                <!--android:layout_margin="15dp"-->
+                <!--android:layout_width="70dp"-->
+                <!--android:layout_height="70dp"-->
+                <!--android:src="@drawable/card_img"-->
+                <!--/>-->
             <TextView
+                android:background="@drawable/shape_card_bg"
                 android:layout_marginBottom="60dp"
                 android:layout_alignParentBottom="true"
                 android:id="@+id/act_main_tv_num"
                 android:layout_marginLeft="35dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="70dp"
+                android:gravity="center"
+                android:layout_height="70dp"
                 android:layout_gravity="center_vertical"
-                android:text="123"
+                android:text=""
                 android:textColor="@color/colorWrite"
                 />
         </RelativeLayout>

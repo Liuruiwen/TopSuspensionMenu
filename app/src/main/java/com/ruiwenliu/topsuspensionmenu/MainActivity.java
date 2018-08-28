@@ -57,8 +57,8 @@ public class MainActivity extends AppCompatActivity {
     SwipeRefreshLayout actMainSrf;
     @BindView(R.id.act_main_abl)
     AppBarLayout actMainAbl;
-    @BindView(R.id.act_main_iv_card)
-    ImageView ivCard;
+//    @BindView(R.id.act_main_iv_card)
+//    ImageView ivCard;
     @BindView(R.id.act_main_tv_num)
     TextView tvNum;
 
@@ -268,4 +268,6 @@ public class MainActivity extends AppCompatActivity {
         countNum=countNum-num;
         tvNum.setText(String.valueOf(countNum));
     }
+
+
 }

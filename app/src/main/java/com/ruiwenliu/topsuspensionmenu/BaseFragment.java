@@ -10,6 +10,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 
 import butterknife.BindView;
@@ -27,6 +30,8 @@ public abstract class BaseFragment extends Fragment {
 
     @BindView(R.id.goods_rv)
     RecyclerView goodsRv;
+    @BindView(R.id.framelayout)
+    FrameLayout frameLayout;
     private View mContentView;
     private Context mContext;
     Unbinder unbinder;
@@ -84,6 +89,14 @@ public abstract class BaseFragment extends Fragment {
         if(_mActivity instanceof MainActivity){
             ((MainActivity) _mActivity).cutItem(num);
         }
+    }
+
+    public TextView getCardView(){
+        if(_mActivity instanceof MainActivity){
+           return  ((MainActivity) _mActivity).tvNum;
+        }
+
+        return null;
     }
 
 }

@@ -2,7 +2,6 @@ package com.ruiwenliu.topsuspensionmenu.bean;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.ruiwenliu.topsuspensionmenu.adapter.CardAdapter;
-import com.ruiwenliu.topsuspensionmenu.inter.CommonItem;
 
 /**
  * Created by ruiwen
@@ -11,7 +10,7 @@ import com.ruiwenliu.topsuspensionmenu.inter.CommonItem;
  * Desc:子类
  */
 
-public class SubclassBean implements MultiItemEntity,CommonItem {
+public class SubclassBean implements MultiItemEntity {
     public String name;
     public String  price;
     public int number;
@@ -24,8 +23,4 @@ public class SubclassBean implements MultiItemEntity,CommonItem {
         return CardAdapter.TYPE_ITEM_SUBCLASS;
     }
 
-    @Override
-    public int getGoodsItemType() {
-        return CardAdapter.TYPE_GOODS_ITEM_CARD;
-    }
 }

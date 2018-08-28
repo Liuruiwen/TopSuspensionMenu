@@ -3,23 +3,15 @@ package com.ruiwenliu.topsuspensionmenu.util;
 import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.ruiwenliu.topsuspensionmenu.R;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by ruiwen
@@ -28,29 +20,33 @@ import java.util.List;
  * Desc:
  */
 
-public class AnimManager<T extends ViewGroup> {
-    private static AnimManager mAnimManager = null;
+public class CardAnimManager<T extends ViewGroup> {
+    private static CardAnimManager mAnimManager = null;
     private Context mContext;
     private float[] mCurrentPosition = new float[2];
-    public static AnimManager getInstance(Context context) {
+    private ImageView animView=null;
+    public static int actionTime=500;//动画执行时间
+    public static CardAnimManager getInstance(Context context) {
         if (mAnimManager == null) {
-            mAnimManager = new AnimManager(context);
+            mAnimManager = new CardAnimManager(context);
         }
 
         return mAnimManager;
     }
 
-    public AnimManager(Context context) {
+    public CardAnimManager(Context context) {
         this.mContext = context.getApplicationContext();
     }
 
-
-    //    ,ImageView imageView
-    public void addGoodToCar(T viewStart, View scrollView, View endView, AnimatorInter animatorInter) {
-        final ImageView view = new ImageView(mContext);
+    public void addGoodToCar(final T viewStart, View scrollView, View endView, AnimatorInter animatorInter) {
+        if(endView==null){
+            return;
+        }
+//        final ImageView view = new ImageView(mContext);
+//        view.setImageResource(R.drawable.add);
 //        view.setImageDrawable(scrollView.getDrawable());
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(100, 100);
-        viewStart.addView(view, layoutParams);
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(40, 40);
+        viewStart.addView(getAnimView(), layoutParams);
 
         //二、计算动画开始/结束点的坐标的准备工作
         //得到父布局的起始点坐标（用于辅助计算动画开始/结束时的点的坐标）
@@ -81,49 +77,40 @@ public class AnimManager<T extends ViewGroup> {
 
         //属性动画
         ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, mPathMeasure.getLength());
-        valueAnimator.setDuration(1000);
+        valueAnimator.setDuration(actionTime);
         valueAnimator.setInterpolator(new LinearInterpolator());
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 float value = (float) animation.getAnimatedValue();
                 mPathMeasure.getPosTan(value, mCurrentPosition, null);
-                view.setTranslationX(mCurrentPosition[0]);
-                view.setTranslationY(mCurrentPosition[1]);
+                getAnimView().setTranslationX(mCurrentPosition[0]);
+                getAnimView().setTranslationY(mCurrentPosition[1]);
             }
         });
-        valueAnimator.addListener(animatorInter);
+        if(animatorInter!=null){
+            valueAnimator.addListener(animatorInter);
+        }else {
+            valueAnimator.addListener(new AnimatorInter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    viewStart.removeView(getAnimView());
+                }
+            });
+        }
+
         valueAnimator.start();
-//        valueAnimator.addListener(new Animator.AnimatorListener() {
-//            @Override
-//            public void onAnimationStart(Animator animation) {
-//
-//            }
-//
-//            @Override
-//            public void onAnimationEnd(Animator animation) {
-//                // 购物车的数量加1
-//                mCount++;
-//                mCountTv.setText(String.valueOf(mCount));
-//                // 把移动的图片imageview从父布局里移除
-//                viewStart.removeView(view);
-//
-//                //shopImg 开始一个放大动画
-//                Animation scaleAnim = AnimationUtils.loadAnimation(GoodsListActivity.this, R.anim.shop_car_scale);
-//                endView.startAnimation(scaleAnim);
-//            }
-//
-//            @Override
-//            public void onAnimationCancel(Animator animation) {
-//
-//            }
-//
-//            @Override
-//            public void onAnimationRepeat(Animator animation) {
-//
-//            }
-//        });
-//        valueAnimator.start();
+    }
+
+    public ImageView getAnimView(){
+        if(animView==null){
+            animView=new ImageView(mContext);
+            animView.setImageResource(R.drawable.add);
+            return animView;
+        }
+
+        return animView;
     }
 
 
