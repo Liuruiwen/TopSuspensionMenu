@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @OnClick({R.id.tv_food, R.id.tv_fruit, R.id.tv_Stores, R.id.tv_hardware})
+    @OnClick({R.id.tv_food, R.id.tv_fruit, R.id.tv_Stores, R.id.tv_hardware,R.id.act_main_tv_num})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_food:
@@ -95,6 +95,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.tv_hardware:
                 setSelectMenu(TYPE_GOODS_FOUR);
+                break;
+            case R.id.act_main_tv_num:
+                startActivity(TwoWayActivity.getIntent(MainActivity.this));
                 break;
         }
     }

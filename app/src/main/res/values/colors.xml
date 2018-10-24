@@ -9,4 +9,5 @@
     <color name="textMain">#333333</color>
     <color name="textGray">#999999</color>
     <color name="colorWrite">#ffffff</color>
+    <color name="colorLine">#eeeeee</color>
 </resources>
