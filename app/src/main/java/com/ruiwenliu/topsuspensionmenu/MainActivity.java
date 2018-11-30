@@ -25,6 +25,7 @@ import com.ruiwenliu.topsuspensionmenu.adapter.CardAdapter;
 import com.ruiwenliu.topsuspensionmenu.adapter.HorizontalAdapter;
 import com.ruiwenliu.topsuspensionmenu.adapter.TabAdapter;
 import com.ruiwenliu.topsuspensionmenu.util.GallerySnapHelper;
+import com.ruiwenliu.topsuspensionmenu.weight.MoveTextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,14 +58,14 @@ public class MainActivity extends AppCompatActivity {
     SwipeRefreshLayout actMainSrf;
     @BindView(R.id.act_main_abl)
     AppBarLayout actMainAbl;
-//    @BindView(R.id.act_main_iv_card)
+    //    @BindView(R.id.act_main_iv_card)
 //    ImageView ivCard;
     @BindView(R.id.act_main_tv_num)
-    TextView tvNum;
+    MoveTextView tvNum;
 
 
     private TabAdapter mAdapter = null;
-    private HorizontalAdapter mHAdapter=null;
+    private HorizontalAdapter mHAdapter = null;
     private int countNum;
 
     public static final int TYPE_GOODS_ONE = 0;
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @OnClick({R.id.tv_food, R.id.tv_fruit, R.id.tv_Stores, R.id.tv_hardware,R.id.act_main_tv_num})
+    @OnClick({R.id.tv_food, R.id.tv_fruit, R.id.tv_Stores, R.id.tv_hardware, R.id.act_main_tv_num})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_food:
@@ -101,7 +102,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
+
     int num;
+
     /**
      * 初始化数据
      */
@@ -117,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
 
-                           mAdapter.refreshData(getListFragment());
+                        mAdapter.refreshData(getListFragment());
                         // 加载完数据设置为不刷新状态，将下拉进度收起来
                         actMainSrf.setRefreshing(false);//一般是请求完数据后在执行，这里只做演示
                     }
@@ -147,15 +150,15 @@ public class MainActivity extends AppCompatActivity {
         /**
          * 添加轮播数据
          */
-        actMainGsv.setDotCarouselData(getListImgview(),R.drawable.yuanquan_up2,R.drawable.yuanquan_down2);
+        actMainGsv.setDotCarouselData(getListImgview(), R.drawable.yuanquan_up2, R.drawable.yuanquan_down2);
         actMainGsv.startCarousel();//开始轮播
         /**
          * 设置横向滚动数据
          */
-        mHAdapter=new HorizontalAdapter(getHorizontalData());
-        actMainRv.setLayoutManager( new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        mHAdapter = new HorizontalAdapter(getHorizontalData());
+        actMainRv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         actMainRv.setAdapter(mHAdapter);
-        GallerySnapHelper snapHelper=new GallerySnapHelper();
+        GallerySnapHelper snapHelper = new GallerySnapHelper();
         snapHelper.attachToRecyclerView(actMainRv);
 
         mAdapter = new TabAdapter(getSupportFragmentManager(), getListFragment());
@@ -220,20 +223,21 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * 临时设置 可以写成公共方法
-     * @param url  地址这些数据应该是后台传给你的，这里只是做标识用
+     *
+     * @param url 地址这些数据应该是后台传给你的，这里只是做标识用
      * @return
      */
     private ImageView setDataToPhotoView(final String url) {
 
-        RelativeLayout.LayoutParams layoutParams=new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,800);//这里最好写成view的布局，这里为了方便简写
-        ImageView  img=new ImageView(this);
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 800);//这里最好写成view的布局，这里为了方便简写
+        ImageView img = new ImageView(this);
         img.setScaleType(ImageView.ScaleType.CENTER_CROP);
         img.setLayoutParams(layoutParams);
         Glide.with(this).load(url).into(img);
         return img;
     }
 
-    private List<String> getHorizontalData(){
+    private List<String> getHorizontalData() {
         List<String> list = new ArrayList<>();
         list.add("http://imgsrc.baidu.com/forum/w=580/sign=1dc0f5cbaaec08fa260013af69ef3d4d/6c8876c2d56285350f1e83559aef76c6a6ef6325.jpg");
         list.add("http://i0.hdslb.com/video/86/8642147023ca8eef937cfba25de85358.jpg");
@@ -251,24 +255,26 @@ public class MainActivity extends AppCompatActivity {
         list.add("http://i0.hdslb.com/video/86/8642147023ca8eef937cfba25de85358.jpg");
         list.add("http://04.imgmini.eastday.com/mobile/20180729/20180729080013_2e0e4f43723e01e40b81bee9e4d4d4e9_1.jpeg");
         list.add("http://pic.wenwo.com/fimg/66712100936_553.jpg");
-        return  list;
+        return list;
     }
 
     /**
      * 增加数量
+     *
      * @param num
      */
-    public  void addItem(int num){
-        countNum=countNum+num;
+    public void addItem(int num) {
+        countNum = countNum + num;
         tvNum.setText(String.valueOf(countNum));
     }
 
     /**
      * 减少数量
+     *
      * @param num
      */
-    public void cutItem(int num){
-        countNum=countNum-num;
+    public void cutItem(int num) {
+        countNum = countNum - num;
         tvNum.setText(String.valueOf(countNum));
     }
 
